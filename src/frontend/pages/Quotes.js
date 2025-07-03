@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { FaPlay, FaPause, FaStop } from "react-icons/fa";
 
 import january from "../data/january";
@@ -7,6 +7,16 @@ import shuffleArray from "../utils/shuffleArray";
 const initialShuffledJanuary = shuffleArray([...january]);
 
 const Quotes = () => {
+  const pageTitle = "Châm ngôn sống";
+
+  useEffect(() => {
+    document.title = pageTitle;
+
+    return () => {
+      document.title = "Peter";
+    };
+  }, [pageTitle]);
+
   const [playingIndex, setPlayingIndex] = useState(null);
   const [isPlayingAll, setIsPlayingAll] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
