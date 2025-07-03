@@ -101,7 +101,7 @@ const Quotes = () => {
   };
 
   return (
-    <div className="w-1/2 mx-4 px-4 mt-4 border-r border-blue-500">
+    <div className="mx-4 px-4 mt-4">
       <h1 className="font-semibold text-lg">Rèn luyện tư duy mỗi ngày</h1>
       <hr className="border-t border-red-500 w-1/3 my-4" />
 
