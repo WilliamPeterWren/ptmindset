@@ -21,8 +21,6 @@ const combinedQuotes = [
   ...july,
 ];
 
-// const combinedQuotes = [...march];
-
 const initialShuffledQuotes = shuffleArray([...combinedQuotes]);
 
 const Quotes = () => {
@@ -52,24 +50,44 @@ const Quotes = () => {
       audioRef.current.currentTime = 0;
     }
 
-    queueIndexRef.current = index;
-
     if (playingIndex === index) {
       setPlayingIndex(null);
+      setIsPlayingAll(false);
+      queueRef.current = [];
+      queueIndexRef.current = 0;
       return;
     }
 
     audioRef.current = new Audio(`/assets/audio/${fileName}`);
-    audioRef.current.onended = () => setPlayingIndex(null);
-    audioRef.current.play();
     setPlayingIndex(index);
     setIsPlayingAll(false);
+
+    // Populate queue with all subsequent valid audio items
+    queueRef.current = initialShuffledQuotes
+      .map((item, idx) => ({ ...item, index: idx }))
+      .filter(
+        (item, idx) =>
+          idx > index &&
+          item.audio &&
+          item.audio.endsWith(".mp3") &&
+          item.audio.length > 10
+      );
+    queueIndexRef.current = 0;
+
+    audioRef.current.onended = () => {
+      setPlayingIndex(null);
+      playNextInQueue();
+    };
+    audioRef.current.play();
   };
 
   const playAll = () => {
     const audios = initialShuffledQuotes
       .map((item, index) => ({ ...item, index }))
-      .filter((item) => item.audio && item.audio.length > 4);
+      .filter(
+        (item) =>
+          item.audio && item.audio.endsWith(".mp3") && item.audio.length > 10
+      );
 
     if (audios.length === 0) return;
 
@@ -108,15 +126,24 @@ const Quotes = () => {
   };
 
   const playNextInQueue = async () => {
-    const current = queueRef.current[queueIndexRef.current];
-    if (!current) {
+    if (
+      queueRef.current.length === 0 ||
+      queueIndexRef.current >= queueRef.current.length
+    ) {
       setPlayingIndex(null);
       setIsPlayingAll(false);
       setIsPaused(false);
+      queueRef.current = [];
+      queueIndexRef.current = 0;
       return;
     }
 
-    if (!current.audio || !current.audio.endsWith(".mp3")) {
+    const current = queueRef.current[queueIndexRef.current];
+    if (
+      !current.audio ||
+      !current.audio.endsWith(".mp3") ||
+      current.audio.length <= 10
+    ) {
       queueIndexRef.current += 1;
       playNextInQueue();
       return;
@@ -133,12 +160,13 @@ const Quotes = () => {
     await delay(500);
 
     try {
-      if (current.audio.length > 10) {
-        await audio.play();
-        setIsPaused(false);
-      }
+      await audio.play();
+      setIsPaused(false);
     } catch (error) {
       console.error("Playback error:", error);
+      queueIndexRef.current += 1;
+      playNextInQueue();
+      return;
     }
 
     audio.onended = () => {
@@ -261,25 +289,27 @@ const Quotes = () => {
               <div
                 key={index}
                 className={`mr-4 px-4 py-2 mx-4 flex items-start justify-between gap-4 border-b pb-3 ${
-                  queueIndexRef.current === index
-                    ? "rounded-lg border border-blue-500 bg-gray-300 text-blue-600"
+                  playingIndex === index
+                    ? "rounded-lg border border-yellow-500 text-blue-300"
                     : ""
                 }`}
               >
                 <pre className="whitespace-pre-wrap flex-1 font-sans">
                   {index + 1}. {item.quote}
                 </pre>
-                {item.audio.length > 10 && (
-                  <button
-                    onClick={() => playSound(item.audio, index)}
-                    className="shrink-0 p-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white"
-                    aria-label={
-                      playingIndex === index ? "Pause audio" : "Play audio"
-                    }
-                  >
-                    {playingIndex === index ? <FaPause /> : <FaPlay />}
-                  </button>
-                )}
+                {item.audio &&
+                  item.audio.endsWith(".mp3") &&
+                  item.audio.length > 10 && (
+                    <button
+                      onClick={() => playSound(item.audio, index)}
+                      className="shrink-0 p-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white"
+                      aria-label={
+                        playingIndex === index ? "Pause audio" : "Play audio"
+                      }
+                    >
+                      {playingIndex === index ? <FaPause /> : <FaPlay />}
+                    </button>
+                  )}
               </div>
             );
           } else {
