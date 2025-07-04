@@ -8,32 +8,32 @@ function Index() {
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   return (
-    <div className="flex flex-col md:flex-row bg-customDark min-h-screen">
-      <div className="md:hidden flex justify-between items-center p-4 bg-gray-800 text-white">
-        <h1 className="text-xl font-bold">Peter Mindset</h1>
+    <div className="flex flex-col md:flex-row min-h-screen bg-customDark text-white">
+      {/* Mobile Top Bar */}
+      <div className="md:hidden flex justify-between items-center p-4 bg-gray-900 border-b border-gray-700">
+        <h1 className="text-lg font-semibold">Peter Mindset</h1>
         <button
-          className="text-white border p-2 rounded"
           onClick={toggleSidebar}
+          className="text-white text-2xl p-2 rounded focus:outline-none"
         >
           ☰
         </button>
       </div>
 
+      {/* Sidebar */}
       <div
         className={`${
           isSidebarOpen ? "block" : "hidden"
-        } md:block w-full md:w-64 border-r`}
+        } md:block md:w-64 bg-gray-900 border-r border-gray-700`}
       >
-        <h1 className="ml-4 mt-4 pt-4 text-xl font-bold text-center">
-          Peter Mindset
-        </h1>
-
+        <h1 className="text-xl font-bold text-center mt-4">Peter Mindset</h1>
         <Sidebar onLinkClick={() => setIsSidebarOpen(false)} />
       </div>
 
-      <div className="flex-1 p-4">
+      {/* Main Content */}
+      <main className="flex-1 p-4 w-full lg:w-[800px] mx-auto">
         <Outlet />
-      </div>
+      </main>
     </div>
   );
 }

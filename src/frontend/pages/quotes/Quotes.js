@@ -5,7 +5,6 @@ import january from "../../data/quotes/january";
 import february from "../../data/quotes/february";
 import march from "../../data/quotes/march";
 import april from "../../data/quotes/april";
-
 import may from "../../data/quotes/may";
 import june from "../../data/quotes/june";
 import july from "../../data/quotes/july";
@@ -177,7 +176,6 @@ const Quotes = () => {
     }
   };
 
-
   useEffect(() => {
     return () => {
       if (audioMusicRef.current) {
@@ -191,7 +189,6 @@ const Quotes = () => {
       }
     };
   }, []);
-  
 
   return (
     <div className="mx-4 px-4 pt-4 bg-customLightDark">
@@ -253,13 +250,15 @@ const Quotes = () => {
         )}
       </div>
 
-      <div className="space-y-4 max-w-xl">
+      <hr className="border-b border-blue-400 w-full my-4" />
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 ">
         {initialShuffledQuotes.map((item, index) => {
           if (item.quote.length > 5) {
             return (
               <div
                 key={index}
-                className={`px-4 py-2 flex items-start justify-between gap-4 border-b pb-3 ${
+                className={`mr-4 px-4 py-2 flex items-start justify-between gap-4 border-b pb-3 ${
                   queueIndexRef.current === index
                     ? "rounded-lg border border-blue-500 bg-gray-300 text-blue-600"
                     : ""
@@ -271,7 +270,7 @@ const Quotes = () => {
                 {item.audio.length > 10 && (
                   <button
                     onClick={() => playSound(item.audio, index)}
-                    className={`shrink-0 p-2 rounded-full  bg-blue-500 hover:bg-blue-600 text-white`}
+                    className="shrink-0 p-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white"
                     aria-label={
                       playingIndex === index ? "Pause audio" : "Play audio"
                     }

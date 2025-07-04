@@ -4,8 +4,8 @@ import Index from "./frontend/pages/Index";
 import FrontendRoute from "./routes/FrontendRoute";
 function App() {
   return (
-    <div className="bg-customHeavyDark text-white">
-      <div className="flex items-center justify-center">
+    <div className="bg-customHeavyDark h-screen text-white">
+      <div className="">
         <Routes>
           <Route path="/" element={<Index />}>
             {FrontendRoute.map((route, index) => {

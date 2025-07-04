@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Sidebar({ onLinkClick }) {
   return (
-    <div className="p-4 h-full text-blue-500">
+    <div className="p-4 text-blue-500">
       <nav className="flex flex-col space-y-2">
         <Link
           to="/home"
