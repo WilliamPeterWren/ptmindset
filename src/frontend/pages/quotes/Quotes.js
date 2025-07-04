@@ -222,62 +222,62 @@ const Quotes = () => {
 
   return (
     <div className="mx-4 px-4 pt-4 bg-customLightDark">
-      <h1 className="font-semibold text-lg">Rèn luyện tư duy mỗi ngày</h1>
+      <h1 className="font-semibold text-lg">
+        Rèn luyện tư duy mỗi ngày - {initialShuffledQuotes.length} châm ngôn{" "}
+      </h1>
       <hr className="border-t border-red-500 w-1/3 my-4" />
 
-      <div>
-        <button
-          className="rounded-lg py-2 px-4 border border-blue-500"
-          onClick={togglePlayMusic}
-        >
-          {isPlayingMusic ? "Pause music" : "Play music"}
-        </button>
-
-        {isPlayingMusic && (
+      <div className="flex justify-items items-center">
+        <div>
           <button
-            onClick={stopMusic}
-            className="ml-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+            className="rounded-lg py-2 px-4 border border-blue-500"
+            onClick={togglePlayMusic}
           >
-            Stop
+            {isPlayingMusic ? "Pause music" : "Play music"}
           </button>
-        )}
-
-        <input
-          type="range"
-          min={0}
-          max={100}
-          value={musicVolume}
-          onChange={(e) => {
-            const vol = Number(e.target.value);
-            setMusicVolume(vol);
-            if (audioMusicRef.current) {
-              audioMusicRef.current.volume = vol / 100;
-            }
-          }}
-          className="ml-2"
-        />
-      </div>
-
-      <div className="h-20 max-w-xs flex justify-stretch items-center">
-        <button
-          onClick={togglePlayPauseAll}
-          className="mb-2 mr-2 px-4 py-2 text-blue-500 rounded-lg border border-blue-500 hover:bg-blue-100 "
-        >
-          {isPlayingAll
-            ? isPaused
-              ? "▶️ Resume"
-              : "⏸ Pause All"
-            : "▶️ Play All"}
-        </button>
-
-        {isPlayingAll && (
+          {isPlayingMusic && (
+            <button
+              onClick={stopMusic}
+              className="ml-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+            >
+              Stop
+            </button>
+          )}
+          <input
+            type="range"
+            min={0}
+            max={100}
+            value={musicVolume}
+            onChange={(e) => {
+              const vol = Number(e.target.value);
+              setMusicVolume(vol);
+              if (audioMusicRef.current) {
+                audioMusicRef.current.volume = vol / 100;
+              }
+            }}
+            className="ml-2"
+          />
+        </div>
+        <div className="ml-4 max-w-xs flex justify-stretch items-center">
           <button
-            onClick={stopAll}
-            className="ml-4 mb-4 mt-2 px-4 py-2 rounded-lg border border-red-500 text-red-600 hover:bg-red-100 flex justify-between items-center"
+            onClick={togglePlayPauseAll}
+            className="mb-2 mr-2 px-4 py-2 text-blue-500 rounded-lg border border-blue-500 hover:bg-blue-100 "
           >
-            <FaStop /> <span className="ml-2">Stop</span>
+            {isPlayingAll
+              ? isPaused
+                ? "▶️ Resume"
+                : "⏸ Pause All"
+              : "▶️ Play All"}
           </button>
-        )}
+          {isPlayingAll && (
+            <button
+              onClick={stopAll}
+              className="ml-4 mb-4 mt-2 px-4 py-2 rounded-lg border border-red-500 text-red-600 hover:bg-red-100 flex justify-between items-center"
+            >
+              <FaStop /> <span className="ml-2">Stop</span>
+            </button>
+          )}
+        </div>
       </div>
 
       <hr className="border-b border-blue-400 w-full my-4" />
