@@ -32,10 +32,9 @@ const may = [
       "may/loi_khuyen_ngu_du_len_ke_hoach_lam_viec_chia_35e8ffcb-0ef2-456e-a510-5312a69a5cc5.mp3",
   },
   {
-    quote:
-      "Đừng: tiêu những thứ không cần thiết, thiếu kiến về tài chính, sợ rủi ro",
+    quote: `Đừng:\n1. Tiêu những thứ không cần thiết \n2. Thiếu kiến thức về tài chính \n3. Sợ rủi ro`,
     audio:
-      "may/dung_tieu_nhung_thu_khong_can_thiet_thieu_kien_5417b751-6884-4e42-94b9-4545290c828f.mp3",
+      "may/dung_1_tieu_nhung_thu_khong_can_thiet_2_thieu_808b9b94-7393-4f91-8816-1d34aa770a9f.mp3",
   },
   {
     quote: "Nên: thiết lập mục tiêu, chọn bạn mà chơi, làm việc chăm chỉ",

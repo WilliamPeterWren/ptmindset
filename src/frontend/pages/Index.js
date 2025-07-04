@@ -24,7 +24,9 @@ function Index() {
           isSidebarOpen ? "block" : "hidden"
         } md:block w-full md:w-64 border-r`}
       >
-        <h1 className="ml-4 mt-4 pt-4 text-xl font-bold text-center">Peter Mindset</h1>
+        <h1 className="ml-4 mt-4 pt-4 text-xl font-bold text-center">
+          Peter Mindset
+        </h1>
 
         <Sidebar onLinkClick={() => setIsSidebarOpen(false)} />
       </div>

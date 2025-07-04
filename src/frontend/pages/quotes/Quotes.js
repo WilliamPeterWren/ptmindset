@@ -146,10 +146,90 @@ const Quotes = () => {
     };
   };
 
+  const audioMusicRef = useRef(null);
+  const [isPlayingMusic, setIsPlayingMusic] = useState(false);
+  const [musicVolume, setMusicVolume] = useState(10);
+
+  const togglePlay = async () => {
+    if (!audioMusicRef.current) {
+      audioMusicRef.current = new Audio("/assets/music/epicmusic.mp3");
+      audioMusicRef.current.volume = musicVolume / 100;
+    }
+
+    try {
+      if (isPlayingMusic) {
+        audioMusicRef.current.pause();
+        setIsPlayingMusic(false);
+      } else {
+        await audioMusicRef.current.play();
+        setIsPlayingMusic(true);
+      }
+    } catch (error) {
+      console.log("Error playing audio:", error);
+    }
+  };
+
+  const stopAudio = () => {
+    if (audioMusicRef.current) {
+      audioMusicRef.current.pause();
+      audioMusicRef.current.currentTime = 0;
+      setIsPlayingMusic(false);
+    }
+  };
+
+
+  useEffect(() => {
+    return () => {
+      if (audioMusicRef.current) {
+        audioMusicRef.current.pause();
+        audioMusicRef.current.currentTime = 0;
+      }
+
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+    };
+  }, []);
+  
+
   return (
     <div className="mx-4 px-4 pt-4 bg-customLightDark">
       <h1 className="font-semibold text-lg">Rèn luyện tư duy mỗi ngày</h1>
       <hr className="border-t border-red-500 w-1/3 my-4" />
+
+      <div>
+        <button
+          className="rounded-lg py-2 px-4 border border-blue-500"
+          onClick={togglePlay}
+        >
+          {isPlayingMusic ? "Pause music" : "Play music"}
+        </button>
+
+        {isPlayingMusic && (
+          <button
+            onClick={stopAudio}
+            className="ml-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+          >
+            Stop
+          </button>
+        )}
+
+        <input
+          type="range"
+          min={0}
+          max={100}
+          value={musicVolume}
+          onChange={(e) => {
+            const vol = Number(e.target.value);
+            setMusicVolume(vol);
+            if (audioMusicRef.current) {
+              audioMusicRef.current.volume = vol / 100;
+            }
+          }}
+          className="ml-2"
+        />
+      </div>
 
       <div className="h-20 max-w-xs flex justify-stretch items-center">
         <button
@@ -179,7 +259,11 @@ const Quotes = () => {
             return (
               <div
                 key={index}
-                className="flex items-start justify-between gap-4 border-b pb-3"
+                className={`px-4 py-2 flex items-start justify-between gap-4 border-b pb-3 ${
+                  queueIndexRef.current === index
+                    ? "rounded-lg border border-blue-500 bg-gray-300 text-blue-600"
+                    : ""
+                }`}
               >
                 <pre className="whitespace-pre-wrap flex-1 font-sans">
                   {index + 1}. {item.quote}
@@ -187,7 +271,7 @@ const Quotes = () => {
                 {item.audio.length > 10 && (
                   <button
                     onClick={() => playSound(item.audio, index)}
-                    className="shrink-0 p-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white"
+                    className={`shrink-0 p-2 rounded-full  bg-blue-500 hover:bg-blue-600 text-white`}
                     aria-label={
                       playingIndex === index ? "Pause audio" : "Play audio"
                     }

@@ -113,10 +113,9 @@ const july = [
       "july/khong_quan_trong_ban_di_cham_the_nao_mien_la_ban_553bbbfa-b6f4-4ce8-a86e-5a30dbe15e02.mp3",
   },
   {
-    quote:
-      "Người quân tử nghiêm khắc với mình, kẻ tiêu nhân nghiêm khắc với người",
+    quote: "Quân tử nghiêm khắc với bản thân, tiểu nhân nghiêm khắc với người",
     audio:
-      "july/nguoi_quan_tu_nghiem_khac_voi_minh_ke_tieu_nhan_36d2f5be-843e-429e-815d-8c4681a361f7.mp3",
+      "july/quan_tu_nghiem_khac_voi_ban_than_tieu_nhan_c0250f67-78cf-46f1-a998-eb4b64fff74f.mp3",
   },
   {
     quote:
