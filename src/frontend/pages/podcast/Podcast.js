@@ -6,10 +6,8 @@ import { podcastFolderId } from "../../../api/entertainmentFolderId";
 import { entertainmentApiKey } from "../../../api/apiKey";
 
 function Podcast() {
-  const pageTitle = "Podcast";
-
   useEffect(() => {
-    document.title = pageTitle;
+    document.title = "Podcast";
     return () => {
       document.title = "Peter";
     };

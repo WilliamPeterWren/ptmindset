@@ -5,6 +5,7 @@ import Entertainment from "../frontend/pages/entertainment/Entertainment";
 import Study from "../frontend/pages/study/Study";
 import Podcast from "../frontend/pages/podcast/Podcast";
 import Work from "../frontend/pages/work/Work";
+import English from "../frontend/pages/learn/English";
 
 const FrontendRoute = [
   // ------------ home ------------
@@ -18,6 +19,9 @@ const FrontendRoute = [
   { path: "/study", component: Study },
   { path: "/podcast", component: Podcast },
   { path: "/work", component: Work },
+
+  // ------------ learn ------------
+  { path: "/learn/english", component: English },
 ];
 
 export default FrontendRoute;

@@ -12,6 +12,7 @@ export default function Sidebar({ onLinkClick }) {
     { to: "/study", label: "Study" },
     { to: "/podcast", label: "Podcast" },
     { to: "/work", label: "Work" },
+    { to: "/learn/english", label: "English" },
   ];
 
   return (
