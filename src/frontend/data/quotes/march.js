@@ -65,9 +65,9 @@ const march = [
       "march/hoan_canh_tao_tinh_cach_4e427f79-55ed-40ec-ab96-50fe5d32b349.mp3",
   },
   {
-    quote: "Không có hạt mầm nào vừa mới treo đã trở thành cây cổ thụ",
+    quote: "Không có hạt mầm nào vừa mới gieo đã trở thành cây cổ thụ",
     audio:
-      "march/khong_co_hat_mam_nao_vua_moi_treo_da_tro_thanh_4968dd28-0ff6-47ce-a348-f6ca1510997d.mp3",
+      "march/khong_duoc_phep_phu_thuoc_dieu_do_lam_giam_su_tu_9049d371-7049-4c3c-a542-58b843653f28.mp3",
   },
   {
     quote:

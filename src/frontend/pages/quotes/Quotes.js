@@ -6,9 +6,22 @@ import february from "../../data/quotes/february";
 import march from "../../data/quotes/march";
 import april from "../../data/quotes/april";
 
+import may from "../../data/quotes/may";
+import june from "../../data/quotes/june";
+import july from "../../data/quotes/july";
+
 import shuffleArray from "../../utils/shuffleArray";
 
-const combinedQuotes = [...january, ...february, ...march, ...april];
+const combinedQuotes = [
+  ...january,
+  ...february,
+  ...march,
+  ...april,
+  ...may,
+  ...june,
+  ...july,
+];
+
 // const combinedQuotes = [...march];
 
 const initialShuffledQuotes = shuffleArray([...combinedQuotes]);
