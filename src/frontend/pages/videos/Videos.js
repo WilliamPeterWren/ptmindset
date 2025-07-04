@@ -55,9 +55,11 @@ function Videos() {
 
   return (
     <div className="mx-4 px-4 pt-4 bg-customLightDark min-h-screen">
-      <h1 className="font-semibold text-lg">
-        Học thêm gì đó - Kho: {initialShuffledMindsets.length} clips
-      </h1>
+      <div className="flex justify-items items-start">
+        <h1 className="font-semibold text-lg">
+          Học thêm gì đó - Kho: {initialShuffledMindsets.length} clips
+        </h1>
+      </div>
       <hr className="border-t border-red-500 my-4 w-full" />
 
       <div className="w-full flex flex-col lg:flex-row justify-items items-start gap-4">
@@ -94,8 +96,8 @@ function Videos() {
         {currentClip.id !== null &&
           currentClip.id.length !== 0 &&
           currentClip.mimeType === "video/mp4" && (
-            <div className="w-full flex flex-col items-center justify-center mt-4 sm:h-full md:h-full ">
-              <div className="w-full aspect-[1/1] sm:aspect-[9/16]">
+            <div className="w-full flex flex-col items-center justify-center  sm:h-full md:h-full ">
+              <div className="w-full aspect-[9/16] max-w-[400px] sm:max-w-[500px] lg:max-w-[450px] mx-auto">
                 <iframe
                   src={`https://drive.google.com/file/d/${currentClip.id}/preview`}
                   allow="autoplay"
@@ -105,11 +107,7 @@ function Videos() {
                 />
               </div>
 
-              <span className="text-sm font-semibold text-blue-300 mt-4 w-full text-center">
-                {currentClip.name}
-              </span>
-
-              <div className="flex mt-4 gap-4 justify-center items-center w-full max-w-md">
+              <div className="flex mt-4 gap-4 justify-between items-center w-full max-w-md">
                 <button
                   onClick={handlePrev}
                   className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"

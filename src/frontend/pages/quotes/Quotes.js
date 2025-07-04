@@ -52,6 +52,8 @@ const Quotes = () => {
       audioRef.current.currentTime = 0;
     }
 
+    queueIndexRef.current = index;
+
     if (playingIndex === index) {
       setPlayingIndex(null);
       return;
@@ -149,7 +151,7 @@ const Quotes = () => {
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
   const [musicVolume, setMusicVolume] = useState(10);
 
-  const togglePlay = async () => {
+  const togglePlayMusic = async () => {
     if (!audioMusicRef.current) {
       audioMusicRef.current = new Audio("/assets/music/epicmusic.mp3");
       audioMusicRef.current.volume = musicVolume / 100;
@@ -168,7 +170,7 @@ const Quotes = () => {
     }
   };
 
-  const stopAudio = () => {
+  const stopMusic = () => {
     if (audioMusicRef.current) {
       audioMusicRef.current.pause();
       audioMusicRef.current.currentTime = 0;
@@ -198,14 +200,14 @@ const Quotes = () => {
       <div>
         <button
           className="rounded-lg py-2 px-4 border border-blue-500"
-          onClick={togglePlay}
+          onClick={togglePlayMusic}
         >
           {isPlayingMusic ? "Pause music" : "Play music"}
         </button>
 
         {isPlayingMusic && (
           <button
-            onClick={stopAudio}
+            onClick={stopMusic}
             className="ml-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
           >
             Stop
@@ -258,7 +260,7 @@ const Quotes = () => {
             return (
               <div
                 key={index}
-                className={`mr-4 px-4 py-2 flex items-start justify-between gap-4 border-b pb-3 ${
+                className={`mr-4 px-4 py-2 mx-4 flex items-start justify-between gap-4 border-b pb-3 ${
                   queueIndexRef.current === index
                     ? "rounded-lg border border-blue-500 bg-gray-300 text-blue-600"
                     : ""

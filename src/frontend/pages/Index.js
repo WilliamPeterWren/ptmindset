@@ -9,7 +9,6 @@ function Index() {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-customDark text-white">
-      {/* Mobile Top Bar */}
       <div className="md:hidden flex justify-between items-center p-4 bg-gray-900 border-b border-gray-700">
         <h1 className="text-lg font-semibold">Peter Mindset</h1>
         <button
@@ -20,7 +19,6 @@ function Index() {
         </button>
       </div>
 
-      {/* Sidebar */}
       <div
         className={`${
           isSidebarOpen ? "block" : "hidden"
@@ -30,7 +28,6 @@ function Index() {
         <Sidebar onLinkClick={() => setIsSidebarOpen(false)} />
       </div>
 
-      {/* Main Content */}
       <main className="flex-1 p-4 w-full lg:w-[800px] mx-auto">
         <Outlet />
       </main>
