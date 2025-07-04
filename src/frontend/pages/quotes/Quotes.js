@@ -1,10 +1,17 @@
 import { useState, useRef, useEffect } from "react";
 import { FaPlay, FaPause, FaStop } from "react-icons/fa";
 
-import january from "../data/january";
-import shuffleArray from "../utils/shuffleArray";
+import january from "../../data/quotes/january";
+import february from "../../data/quotes/february";
+import march from "../../data/quotes/march";
+import april from "../../data/quotes/april";
 
-const initialShuffledJanuary = shuffleArray([...january]);
+import shuffleArray from "../../utils/shuffleArray";
+
+const combinedQuotes = [...january, ...february, ...march, ...april];
+// const combinedQuotes = [...march];
+
+const initialShuffledQuotes = shuffleArray([...combinedQuotes]);
 
 const Quotes = () => {
   const pageTitle = "Châm ngôn sống";
@@ -16,6 +23,8 @@ const Quotes = () => {
       document.title = "Peter";
     };
   }, [pageTitle]);
+
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const [playingIndex, setPlayingIndex] = useState(null);
   const [isPlayingAll, setIsPlayingAll] = useState(false);
@@ -36,7 +45,7 @@ const Quotes = () => {
       return;
     }
 
-    audioRef.current = new Audio(`/assets/audio/january/${fileName}`);
+    audioRef.current = new Audio(`/assets/audio/${fileName}`);
     audioRef.current.onended = () => setPlayingIndex(null);
     audioRef.current.play();
     setPlayingIndex(index);
@@ -44,7 +53,7 @@ const Quotes = () => {
   };
 
   const playAll = () => {
-    const audios = initialShuffledJanuary
+    const audios = initialShuffledQuotes
       .map((item, index) => ({ ...item, index }))
       .filter((item) => item.audio && item.audio.length > 4);
 
@@ -84,7 +93,7 @@ const Quotes = () => {
     }
   };
 
-  const playNextInQueue = () => {
+  const playNextInQueue = async () => {
     const current = queueRef.current[queueIndexRef.current];
     if (!current) {
       setPlayingIndex(null);
@@ -93,16 +102,30 @@ const Quotes = () => {
       return;
     }
 
+    if (!current.audio || !current.audio.endsWith(".mp3")) {
+      queueIndexRef.current += 1;
+      playNextInQueue();
+      return;
+    }
+
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
 
-    const audio = new Audio(`/assets/audio/january/${current.audio}`);
+    const audio = new Audio(`/assets/audio/${current.audio}`);
     audioRef.current = audio;
     setPlayingIndex(current.index);
-    audio.play();
-    setIsPaused(false);
+    await delay(500);
+
+    try {
+      if (current.audio.length > 10) {
+        await audio.play();
+        setIsPaused(false);
+      }
+    } catch (error) {
+      console.error("Playback error:", error);
+    }
 
     audio.onended = () => {
       queueIndexRef.current += 1;
@@ -111,14 +134,14 @@ const Quotes = () => {
   };
 
   return (
-    <div className="mx-4 px-4 mt-4">
+    <div className="mx-4 px-4 pt-4 bg-customLightDark">
       <h1 className="font-semibold text-lg">Rèn luyện tư duy mỗi ngày</h1>
       <hr className="border-t border-red-500 w-1/3 my-4" />
 
       <div className="h-20 max-w-xs flex justify-stretch items-center">
         <button
           onClick={togglePlayPauseAll}
-          className="mb-2 mr-2 px-4 py-2 rounded-lg border border-blue-500 hover:bg-blue-100"
+          className="mb-2 mr-2 px-4 py-2 text-blue-500 rounded-lg border border-blue-500 hover:bg-blue-100 "
         >
           {isPlayingAll
             ? isPaused
@@ -138,27 +161,33 @@ const Quotes = () => {
       </div>
 
       <div className="space-y-4 max-w-xl">
-        {initialShuffledJanuary.map((item, index) => (
-          <div
-            key={index}
-            className="flex items-start justify-between gap-4 border-b pb-3"
-          >
-            <pre className="whitespace-pre-wrap flex-1 font-sans">
-              {index + 1}. {item.quote}
-            </pre>
-            {item.audio.length > 4 && (
-              <button
-                onClick={() => playSound(item.audio, index)}
-                className="shrink-0 p-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white"
-                aria-label={
-                  playingIndex === index ? "Pause audio" : "Play audio"
-                }
+        {initialShuffledQuotes.map((item, index) => {
+          if (item.quote.length > 5) {
+            return (
+              <div
+                key={index}
+                className="flex items-start justify-between gap-4 border-b pb-3"
               >
-                {playingIndex === index ? <FaPause /> : <FaPlay />}
-              </button>
-            )}
-          </div>
-        ))}
+                <pre className="whitespace-pre-wrap flex-1 font-sans">
+                  {index + 1}. {item.quote}
+                </pre>
+                {item.audio.length > 10 && (
+                  <button
+                    onClick={() => playSound(item.audio, index)}
+                    className="shrink-0 p-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white"
+                    aria-label={
+                      playingIndex === index ? "Pause audio" : "Play audio"
+                    }
+                  >
+                    {playingIndex === index ? <FaPause /> : <FaPlay />}
+                  </button>
+                )}
+              </div>
+            );
+          } else {
+            return null;
+          }
+        })}
       </div>
     </div>
   );
