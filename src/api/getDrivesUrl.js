@@ -1,12 +1,5 @@
-// const axios = require("axios");
 import axios from "axios";
 
-/**
- * Fetch all file URLs from a public Google Drive folder using API key.
- * @param {string} folderId - The ID of the public Google Drive folder.
- * @param {string} apiKey - Your Google API key.
- * @returns {Promise<Array>} - A list of file objects with name, id, mimeType, viewUrl, and downloadUrl.
- */
 export default async function getDriveUrls(folderId, apiKey) {
   const url = "https://www.googleapis.com/drive/v3/files";
   const params = {
